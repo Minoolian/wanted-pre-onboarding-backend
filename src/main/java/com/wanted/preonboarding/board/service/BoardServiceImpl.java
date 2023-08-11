@@ -1,5 +1,6 @@
 package com.wanted.preonboarding.board.service;
 
+import com.wanted.preonboarding.board.dto.BoardPatchDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.repository.BoardRepostitory;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Board updateBoard(Long boardId, Board newBoard) {
+    public Board updateBoard(Long boardId, BoardPatchDto newBoard) {
         Board currentBoard = verifyBoard(boardId);
         return currentBoard.correctBoard(newBoard);
     }
