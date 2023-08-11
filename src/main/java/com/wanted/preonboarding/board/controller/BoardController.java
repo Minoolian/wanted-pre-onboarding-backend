@@ -2,6 +2,7 @@ package com.wanted.preonboarding.board.controller;
 
 import com.wanted.preonboarding.board.dto.BoardGetDetailDto;
 import com.wanted.preonboarding.board.dto.BoardGetDto;
+import com.wanted.preonboarding.board.dto.BoardPatchDto;
 import com.wanted.preonboarding.board.dto.BoardPostDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.mapper.BoardMapper;
@@ -40,6 +41,12 @@ public class BoardController {
     public ResponseEntity<List<BoardGetDto>> getBoards(int page, int size) {
         Page<Board> boards = boardService.readBoards(page - 1, size);
         return new ResponseEntity<>(boardMapper.boardsToBoardGetDTOs(boards.getContent()), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{boardId}")
+    public ResponseEntity<BoardGetDetailDto> patchBoard(@PathVariable Long boardId, @RequestBody BoardPatchDto boardPatchDto) {
+        Board board = boardService.updateBoard(boardId, boardPatchDto);
+        return new ResponseEntity<>(boardMapper.boardToBoardGetDetailDto(board), HttpStatus.OK);
     }
 
 }
