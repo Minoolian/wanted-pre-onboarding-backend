@@ -32,4 +32,10 @@ public class BoardServiceImpl implements BoardService{
     public Page<Board> readBoards(int page, int size) {
         return boardRepostitory.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()));
     }
+
+    @Override
+    public Board updateBoard(Long boardId, Board newBoard) {
+        Board currentBoard = verifyBoard(boardId);
+        return currentBoard.correctBoard(newBoard);
+    }
 }
