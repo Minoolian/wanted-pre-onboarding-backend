@@ -36,4 +36,10 @@ public class BoardController {
         return new ResponseEntity<>(boardMapper.boardToBoardGetDetailDto(board), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<BoardGetDto>> getBoards(int page, int size) {
+        Page<Board> boards = boardService.readBoards(page - 1, size);
+        return new ResponseEntity<>(boardMapper.boardsToBoardGetDTOs(boards.getContent()), HttpStatus.OK);
+    }
+
 }
