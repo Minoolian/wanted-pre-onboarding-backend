@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.board.entity;
 
 import com.wanted.preonboarding.audit.Auditable;
+import com.wanted.preonboarding.board.dto.BoardPatchDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +21,9 @@ public class Board extends Auditable {
     @Column(nullable = false)
     private String content;
 
-    public Board correctBoard(Board newBoard) {
-        this.title = newBoard.title;
-        this.content = newBoard.content;
+    public Board correctBoard(BoardPatchDto newBoard) {
+        this.title = newBoard.getTitle();
+        this.content = newBoard.getContent();
 
         return this;
     }
