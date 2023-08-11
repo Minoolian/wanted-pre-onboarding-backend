@@ -1,14 +1,18 @@
 package com.wanted.preonboarding.board.controller;
 
 import com.wanted.preonboarding.board.dto.BoardGetDetailDto;
+import com.wanted.preonboarding.board.dto.BoardGetDto;
 import com.wanted.preonboarding.board.dto.BoardPostDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.mapper.BoardMapper;
 import com.wanted.preonboarding.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,9 +31,8 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<BoardGetDetailDto> readBoard(@PathVariable Long boardId) {
+    public ResponseEntity<BoardGetDetailDto> getBoard(@PathVariable Long boardId) {
         Board board = boardService.readBoard(boardId);
-
         return new ResponseEntity<>(boardMapper.boardToBoardGetDetailDto(board), HttpStatus.OK);
     }
 
