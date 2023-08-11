@@ -2,8 +2,12 @@ package com.wanted.preonboarding.board.entity;
 
 import com.wanted.preonboarding.audit.Auditable;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Board extends Auditable {
 
     @Id
