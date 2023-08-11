@@ -3,6 +3,7 @@ package com.wanted.preonboarding.board.service;
 import com.wanted.preonboarding.board.dto.BoardPatchDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.repository.BoardRepostitory;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepostitory boardRepostitory;
