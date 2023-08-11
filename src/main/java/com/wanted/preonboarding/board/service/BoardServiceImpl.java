@@ -28,4 +28,8 @@ public class BoardServiceImpl implements BoardService{
         return boardRepostitory.findById(boardId).orElseThrow(() -> new NullPointerException());
     }
 
+    @Override
+    public Page<Board> readBoards(int page, int size) {
+        return boardRepostitory.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()));
+    }
 }
