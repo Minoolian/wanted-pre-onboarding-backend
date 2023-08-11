@@ -16,4 +16,10 @@ public class Board extends Auditable {
     @Column(nullable = false)
     private String content;
 
+    public Board correctBoard(Board newBoard) {
+        this.title = newBoard.title;
+        this.content = newBoard.content;
+
+        return this;
+    }
 }
