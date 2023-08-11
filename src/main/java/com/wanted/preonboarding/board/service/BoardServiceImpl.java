@@ -38,4 +38,10 @@ public class BoardServiceImpl implements BoardService{
         Board currentBoard = verifyBoard(boardId);
         return currentBoard.correctBoard(newBoard);
     }
+
+    @Override
+    public void deleteBoard(Long boardId) {
+        Board board = verifyBoard(boardId);
+        boardRepostitory.delete(board);
+    }
 }
