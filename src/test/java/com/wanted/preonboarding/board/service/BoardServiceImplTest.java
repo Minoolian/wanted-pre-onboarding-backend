@@ -14,12 +14,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -71,16 +71,14 @@ class BoardServiceImplTest {
         int page = 0;
         int size = 10;
         Board board = new Board(1L, "Test Title", "Test Content");
-        List<Board> boards = new ArrayList<>();
-        boards.add(board);
-        Page<Board> pagingBoards = new PageImpl<>(boards);
-        given(boardRepostitory.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()))).willReturn(pagingBoards);
+        Page<Board> boards = new PageImpl<>(List.of(board));
+        given(boardRepostitory.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()))).willReturn(boards);
 
         //when
         Page<Board> readBoards = boardService.readBoards(page, size);
 
         //then
-        assertThat(readBoards).isEqualTo(pagingBoards);
+        assertThat(readBoards).isEqualTo(boards);
         verify(boardRepostitory, times(1)).findAll(any(PageRequest.class));
     }
 
