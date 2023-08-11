@@ -10,4 +10,6 @@ public class BoardGetDetailDto {
     private Long boardId;
 
     private String title;
+
+    private String content;
 }
