@@ -19,5 +19,13 @@ public class BoardServiceImpl implements BoardService{
         return boardRepostitory.save(board);
     }
 
+    @Override
+    public Board readBoard(Long boardId) {
+        return verifyBoard(boardId);
+    }
+
+    private Board verifyBoard(Long boardId) {
+        return boardRepostitory.findById(boardId).orElseThrow(() -> new NullPointerException());
+    }
 
 }
