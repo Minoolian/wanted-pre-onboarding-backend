@@ -3,6 +3,8 @@ package com.wanted.preonboarding.board.service;
 import com.wanted.preonboarding.board.dto.BoardPatchDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.repository.BoardRepostitory;
+import com.wanted.preonboarding.exception.BusinessLogicException;
+import com.wanted.preonboarding.exception.ExceptionCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +30,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     private Board verifyBoard(Long boardId) {
-        return boardRepostitory.findById(boardId).orElseThrow(() -> new NullPointerException());
+        return boardRepostitory.findById(boardId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
     }
 
     @Override
@@ -39,14 +41,14 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public Board updateBoard(Long boardId, BoardPatchDto newBoard, Long userId) {
         Board currentBoard = verifyBoard(boardId);
-        if (currentBoard.getUserId() != userId) throw new NullPointerException();
+        if (currentBoard.getUserId() != userId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZATION);
         return currentBoard.correctBoard(newBoard);
     }
 
     @Override
     public void deleteBoard(Long boardId, Long userId) {
         Board board = verifyBoard(boardId);
-        if (board.getUserId() != userId) throw new NullPointerException();
+        if (board.getUserId() != userId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZATION);
         boardRepostitory.delete(board);
     }
 }
