@@ -9,6 +9,11 @@ java -jar build/libs/preonboarding-0.0.1-SNAPSHOT.jar
 
 Endpoint : http://localhost:8080
 
++ docker
+```bash
+docker-compose up -d
+```
+
 ## 데이터베이스 테이블 구조
 ![image](https://github.com/Minoolian/wanted-pre-onboarding-backend/assets/44282342/ff38cc9c-bb80-4042-abfa-3f292eb0cb2b)
 
