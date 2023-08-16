@@ -89,7 +89,9 @@ class BoardServiceImplTest {
         //given
         Long boardId = 1L;
         Long userId = 1L;
-        Board board = new Board(1L, "Test Title", "Test Content", new User());
+        User user = new User();
+        user.setUserId(userId);
+        Board board = new Board(1L, "Test Title", "Test Content", user);
         BoardPatchDto newBoard = new BoardPatchDto("New Title", "New Content");
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
@@ -108,7 +110,9 @@ class BoardServiceImplTest {
         //given
         Long boardId = 1L;
         Long userId = 1L;
-        Board board = new Board(1L, "Test Title", "Test Content", new User());
+        User user = new User();
+        user.setUserId(userId);
+        Board board = new Board(1L, "Test Title", "Test Content", user);
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
         //when
