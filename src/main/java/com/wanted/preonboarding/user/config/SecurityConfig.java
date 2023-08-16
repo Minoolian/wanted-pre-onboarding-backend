@@ -1,5 +1,7 @@
 package com.wanted.preonboarding.user.config;
 
+import com.wanted.preonboarding.user.filter.JwtAuthorizationFilter;
+import com.wanted.preonboarding.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +13,14 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final CorsFilter corsFilter;
 
     private final JwtConfig jwtConfig;
@@ -31,12 +35,16 @@ public class SecurityConfig {
                 .addFilter(corsFilter)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .apply(new CustomDsl())
-                .authorizeRequests()
-                .antMatchers("/address/**","/members/**").permitAll()
-                .antMatchers("/products/**", "/image/**").permitAll()
-                .anyRequest()
-                .authenticated();
+                .authorizeHttpRequests(request ->
+                        request
+                                .requestMatchers(new AntPathRequestMatcher("/board/**", "GET")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/h2/**")).permitAll()
+                                .anyRequest()
+                                .authenticated()
+                )
+                .apply(new CustomDsl());
+
         return http.build();
     }
 
