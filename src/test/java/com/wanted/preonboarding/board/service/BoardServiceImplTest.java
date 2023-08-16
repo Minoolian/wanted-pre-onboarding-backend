@@ -88,12 +88,13 @@ class BoardServiceImplTest {
     void updateBoard() {
         //given
         Long boardId = 1L;
+        Long userId = 1L;
         Board board = new Board(1L, "Test Title", "Test Content", new User());
         BoardPatchDto newBoard = new BoardPatchDto("New Title", "New Content");
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
         //when
-        Board updateBoard = boardService.updateBoard(boardId, newBoard);
+        Board updateBoard = boardService.updateBoard(boardId, newBoard, userId);
 
         //then
         assertThat(updateBoard.getTitle()).isEqualTo(newBoard.getTitle());
@@ -106,11 +107,12 @@ class BoardServiceImplTest {
     void deleteBoard() {
         //given
         Long boardId = 1L;
+        Long userId = 1L;
         Board board = new Board(1L, "Test Title", "Test Content", new User());
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
         //when
-        boardService.deleteBoard(boardId);
+        boardService.deleteBoard(boardId, userId);
 
         //then
         verify(boardRepostitory, times(1)).findById(anyLong());
