@@ -8,6 +8,7 @@ import com.wanted.preonboarding.board.dto.BoardPostDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.mapper.BoardMapper;
 import com.wanted.preonboarding.board.service.BoardService;
+import com.wanted.preonboarding.user.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,12 @@ class BoardControllerTest {
     @DisplayName("새로운 게시글을 생성 API")
     void postBoard() throws Exception {
         //given
-        BoardPostDto boardPostDto = new BoardPostDto("Test Title", "Test Content");
+        BoardPostDto boardPostDto = new BoardPostDto(1L, "Test Title", "Test Content");
         String json = gson.toJson(boardPostDto);
         Long boardId = 1L;
 
         given(boardMapper.boardPostDtoToBoard(any(BoardPostDto.class))).willReturn(new Board());
-        given(boardService.createBoard(any(Board.class))).willReturn(new Board(1L, boardPostDto.getTitle(), boardPostDto.getContent()));
+        given(boardService.createBoard(any(Board.class))).willReturn(new Board(1L, boardPostDto.getTitle(), boardPostDto.getContent(), new User()));
 
         //when
         ResultActions perform = mockMvc.perform(
@@ -74,7 +75,7 @@ class BoardControllerTest {
     void getBoard() throws Exception {
         //given
         Long boardId = 1L;
-        BoardGetDetailDto boardGetDetailDto = new BoardGetDetailDto(1L, "Test Title", "Test Content");
+        BoardGetDetailDto boardGetDetailDto = new BoardGetDetailDto(1L, 1L, "Test Title", "Test Content");
         given(boardService.readBoard(anyLong())).willReturn(new Board());
         given(boardMapper.boardToBoardGetDetailDto(any(Board.class))).willReturn(boardGetDetailDto);
 
@@ -96,8 +97,8 @@ class BoardControllerTest {
         //given
         int page = 1;
         int size = 10;
-        Board board = new Board(1L, "Test Title", "Test Content");
-        BoardGetDto boardGetDto = new BoardGetDto(1L, "Test Title");
+        Board board = new Board(1L, "Test Title", "Test Content", new User());
+        BoardGetDto boardGetDto = new BoardGetDto(1L, 1L, "Test Title");
         List<BoardGetDto> boardGetDtos = List.of(boardGetDto);
         Page<Board> boards = new PageImpl<>(List.of(board));
 
@@ -122,11 +123,11 @@ class BoardControllerTest {
     void patchBoard() throws Exception {
         //given
         BoardPatchDto boardPatchDto = new BoardPatchDto("New Title", "New Content");
-        BoardGetDetailDto boardGetDetailDto = new BoardGetDetailDto(1L, "New Title", "New Content");
+        BoardGetDetailDto boardGetDetailDto = new BoardGetDetailDto(1L, 1L, "New Title", "New Content");
         String json = gson.toJson(boardPatchDto);
         Long boardId = 1L;
 
-        given(boardService.updateBoard(anyLong(), any(BoardPatchDto.class))).willReturn(new Board());
+        given(boardService.updateBoard(anyLong(), any(BoardPatchDto.class), anyLong())).willReturn(new Board());
         given(boardMapper.boardToBoardGetDetailDto(any(Board.class))).willReturn(boardGetDetailDto);
 
         //when
@@ -148,8 +149,9 @@ class BoardControllerTest {
     void deleteBoard() throws Exception {
         //given
         Long boardId = 1L;
+        Long userId = 1L;
 
-        doNothing().when(boardService).deleteBoard(boardId);
+        doNothing().when(boardService).deleteBoard(boardId, userId);
 
         //when
         ResultActions perform = mockMvc.perform(

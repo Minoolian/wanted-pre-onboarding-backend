@@ -3,6 +3,7 @@ package com.wanted.preonboarding.board.service;
 import com.wanted.preonboarding.board.dto.BoardPatchDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.repository.BoardRepostitory;
+import com.wanted.preonboarding.user.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,7 @@ class BoardServiceImplTest {
     @DisplayName("새로운 게시글을 생성")
     void createBoard() {
         //given
-        Board board = new Board(1L, "Test Title", "Test Content");
+        Board board = new Board(1L, "Test Title", "Test Content", new User());
         given(boardRepostitory.save(board)).willReturn(board);
 
         //when
@@ -53,7 +54,7 @@ class BoardServiceImplTest {
     void readBoard() {
         //given
         Long boardId = 1L;
-        Board board = new Board(1L, "Test Title", "Test Content");
+        Board board = new Board(1L, "Test Title", "Test Content", new User());
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
         //when
@@ -70,7 +71,7 @@ class BoardServiceImplTest {
         //given
         int page = 0;
         int size = 10;
-        Board board = new Board(1L, "Test Title", "Test Content");
+        Board board = new Board(1L, "Test Title", "Test Content", new User());
         Page<Board> boards = new PageImpl<>(List.of(board));
         given(boardRepostitory.findAll(PageRequest.of(page, size, Sort.by("boardId").descending()))).willReturn(boards);
 
@@ -87,7 +88,7 @@ class BoardServiceImplTest {
     void updateBoard() {
         //given
         Long boardId = 1L;
-        Board board = new Board(1L, "Test Title", "Test Content");
+        Board board = new Board(1L, "Test Title", "Test Content", new User());
         BoardPatchDto newBoard = new BoardPatchDto("New Title", "New Content");
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
@@ -105,7 +106,7 @@ class BoardServiceImplTest {
     void deleteBoard() {
         //given
         Long boardId = 1L;
-        Board board = new Board(1L, "Test Title", "Test Content");
+        Board board = new Board(1L, "Test Title", "Test Content", new User());
         given(boardRepostitory.findById(boardId)).willReturn(Optional.of(board));
 
         //when
