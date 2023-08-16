@@ -31,5 +31,4 @@ https://documenter.getpostman.com/view/25040897/2s9Y5R15q4
 
 ## 배포 환경
 ![image](https://github.com/Minoolian/wanted-pre-onboarding-backend/assets/44282342/82a97a4b-49ba-4f25-a395-20b0080becf5)
-
-
+http://3.38.30.58:8080
