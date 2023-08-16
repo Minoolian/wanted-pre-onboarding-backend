@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class BoardGetDto {
 
+    private Long userId;
+
     private Long boardId;
 
     private String title;
