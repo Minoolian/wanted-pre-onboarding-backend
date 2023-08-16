@@ -8,6 +8,7 @@ import com.wanted.preonboarding.board.dto.BoardPostDto;
 import com.wanted.preonboarding.board.entity.Board;
 import com.wanted.preonboarding.board.mapper.BoardMapper;
 import com.wanted.preonboarding.board.service.BoardService;
+import com.wanted.preonboarding.config.WithMockCustomUser;
 import com.wanted.preonboarding.user.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,12 +27,14 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BoardController.class)
 @MockBean(JpaMetamodelMappingContext.class)
+@WithMockCustomUser
 class BoardControllerTest {
 
     @Autowired
@@ -60,6 +63,7 @@ class BoardControllerTest {
         //when
         ResultActions perform = mockMvc.perform(
                 post("/board")
+                        .with(csrf())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
@@ -133,6 +137,7 @@ class BoardControllerTest {
         //when
         ResultActions perform = mockMvc.perform(
                 patch("/board/1")
+                        .with(csrf())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
@@ -156,6 +161,7 @@ class BoardControllerTest {
         //when
         ResultActions perform = mockMvc.perform(
                 delete("/board/1")
+                        .with(csrf())
         );
 
         //then
