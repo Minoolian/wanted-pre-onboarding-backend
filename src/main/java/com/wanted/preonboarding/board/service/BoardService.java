@@ -12,8 +12,8 @@ public interface BoardService {
 
     public Page<Board> readBoards(int page, int size);
 
-    public Board updateBoard(Long boardId, BoardPatchDto board);
+    public Board updateBoard(Long boardId, BoardPatchDto board, Long userId);
 
-    public void deleteBoard(Long boardId);
+    public void deleteBoard(Long boardId, Long userId);
 
 }

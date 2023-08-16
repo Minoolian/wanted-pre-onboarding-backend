@@ -37,14 +37,16 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Board updateBoard(Long boardId, BoardPatchDto newBoard) {
+    public Board updateBoard(Long boardId, BoardPatchDto newBoard, Long userId) {
         Board currentBoard = verifyBoard(boardId);
+        if (currentBoard.getUserId() != userId) throw new NullPointerException();
         return currentBoard.correctBoard(newBoard);
     }
 
     @Override
-    public void deleteBoard(Long boardId) {
+    public void deleteBoard(Long boardId, Long userId) {
         Board board = verifyBoard(boardId);
+        if (board.getUserId() != userId) throw new NullPointerException();
         boardRepostitory.delete(board);
     }
 }
