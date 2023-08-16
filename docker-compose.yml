@@ -1,0 +1,6 @@
+application:
+  container_name: app-simple
+  build: ../
+  restart: always
+  ports:
+    - '8080:8080'
