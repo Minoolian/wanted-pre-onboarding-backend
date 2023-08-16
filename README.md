@@ -29,3 +29,7 @@ https://drive.google.com/file/d/1DpvJoiDzZq57E2x9uoGfCq_dp8scKARs/view?usp=drive
 ## API 명세(request/response 포함)
 https://documenter.getpostman.com/view/25040897/2s9Y5R15q4
 
+## 배포 환경
+![image](https://github.com/Minoolian/wanted-pre-onboarding-backend/assets/44282342/82a97a4b-49ba-4f25-a395-20b0080becf5)
+
+
